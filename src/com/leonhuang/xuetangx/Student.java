@@ -32,7 +32,6 @@ public class Student {
 		String jsonString = "";
 		try {
 			jsonString = HttpOpener.makeRequest(URL_VERIFY, params);
-			Log.i("json", jsonString);
 		} catch (ClientProtocolException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
