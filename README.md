@@ -1,5 +1,5 @@
 XuetangX Android SDK
 ====================
 
-See raw HTTP API here: http://xuetangxserver.sinaapp.com/
+See raw HTTP API here: https://github.com/leon-huang/xuetangx-server
 
