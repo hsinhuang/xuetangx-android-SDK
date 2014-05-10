@@ -4,11 +4,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VideoUrlInfo {
+public class VideoUrlInfo extends BaseInfo {
 	private String[] highQualityUrls;
 	private String[] lowQualityUrls;
 
-	private VideoUrlInfo(String[] highQualityUrls, String[] lowQualityUrls) {
+	private VideoUrlInfo(String[] highQualityUrls, String[] lowQualityUrls,
+			JSONObject json) {
+		super(json);
+
 		this.highQualityUrls = highQualityUrls;
 		this.lowQualityUrls = lowQualityUrls;
 	}
@@ -28,7 +31,7 @@ public class VideoUrlInfo {
 			lowQualityUrls[i] = lowQualityJSON.getString(i);
 		}
 
-		return new VideoUrlInfo(highQualityUrls, lowQualityUrls);
+		return new VideoUrlInfo(highQualityUrls, lowQualityUrls, json);
 	}
 
 	public String[] getHighQualityUrls() {

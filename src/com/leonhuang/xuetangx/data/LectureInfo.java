@@ -6,13 +6,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LectureInfo {
+public class LectureInfo extends BaseInfo {
 
 	private String title;
 	private String url;
 	private ArrayList<ItemInfo> items;
 
-	private LectureInfo(String title, String url, ArrayList<ItemInfo> items) {
+	private LectureInfo(String title, String url, ArrayList<ItemInfo> items,
+			JSONObject json) {
+		super(json);
+
 		this.title = title;
 		this.url = url;
 		this.items = items;
@@ -25,7 +28,7 @@ public class LectureInfo {
 			items.add(ItemInfo.fromJSON(itemsJSON.getJSONObject(i)));
 		}
 		return new LectureInfo(json.getString("lecture_title"),
-				json.getString("lecture_url"), items);
+				json.getString("lecture_url"), items, json);
 	}
 
 	public String getTitle() {

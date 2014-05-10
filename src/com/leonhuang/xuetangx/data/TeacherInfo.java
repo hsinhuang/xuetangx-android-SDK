@@ -3,11 +3,13 @@ package com.leonhuang.xuetangx.data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TeacherInfo {
+public class TeacherInfo extends BaseInfo {
 	private String name;
 	private String title;
 
-	private TeacherInfo(String name, String title) {
+	private TeacherInfo(String name, String title, JSONObject json) {
+		super(json);
+
 		this.name = name;
 		this.title = title;
 	}
@@ -18,7 +20,7 @@ public class TeacherInfo {
 		if (name.isEmpty() || title.isEmpty()) {
 			return null;
 		} else {
-			return new TeacherInfo(name, title);
+			return new TeacherInfo(name, title, json);
 		}
 	}
 

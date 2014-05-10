@@ -3,7 +3,7 @@ package com.leonhuang.xuetangx.data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CourseInfo {
+public class CourseInfo extends BaseInfo {
 
 	private String owner;
 	private String university;
@@ -17,9 +17,12 @@ public class CourseInfo {
 	private boolean hasTA;
 	private String subtitle;
 
-	private CourseInfo(String owner, String university, String id, String title,
-			String imgUrl, String courseAboutUrl, TeacherInfo teacher,
-			String updateInfo, int serializeNo, boolean hasTA, String subtitle) {
+	private CourseInfo(String owner, String university, String id,
+			String title, String imgUrl, String courseAboutUrl,
+			TeacherInfo teacher, String updateInfo, int serializeNo,
+			boolean hasTA, String subtitle, JSONObject json) {
+		super(json);
+
 		this.owner = owner;
 		this.university = university;
 		this.id = id;
@@ -40,7 +43,7 @@ public class CourseInfo {
 				json.getString("course_about_url"), TeacherInfo.fromJSON(json
 						.getJSONObject("teacher")),
 				json.getString("update_info"), json.getInt("serialized_no"),
-				json.getBoolean("hasTA"), json.getString("subtitle"));
+				json.getBoolean("hasTA"), json.getString("subtitle"), json);
 	}
 
 	public String getOwner() {

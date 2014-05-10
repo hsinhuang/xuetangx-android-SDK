@@ -6,13 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SimpleChapterInfo {
+public class SimpleChapterInfo extends BaseInfo {
 
 	private String title;
 	private ArrayList<SimpleLectureInfo> lectures;
 
 	private SimpleChapterInfo(String title,
-			ArrayList<SimpleLectureInfo> lectures) {
+			ArrayList<SimpleLectureInfo> lectures, JSONObject json) {
+		super(json);
+
 		this.title = title;
 		this.lectures = lectures;
 	}
@@ -25,7 +27,8 @@ public class SimpleChapterInfo {
 			lectures.add(SimpleLectureInfo.fromJSON(lecturesJSON
 					.getJSONObject(i)));
 		}
-		return new SimpleChapterInfo(json.getString("chapter_title"), lectures);
+		return new SimpleChapterInfo(json.getString("chapter_title"), lectures,
+				json);
 	}
 
 	public String getTitle() {

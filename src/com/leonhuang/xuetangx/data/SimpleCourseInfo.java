@@ -5,7 +5,7 @@ import java.util.Calendar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SimpleCourseInfo {
+public class SimpleCourseInfo extends BaseInfo {
 	private SimpleCourseStatus status;
 	private String university;
 	private String id;
@@ -16,7 +16,9 @@ public class SimpleCourseInfo {
 
 	private SimpleCourseInfo(SimpleCourseStatus status, String university,
 			String id, String title, Calendar startDate, String imgUrl,
-			String courseInfoUrl) {
+			String courseInfoUrl, JSONObject json) {
+		super(json);
+
 		this.status = status;
 		this.university = university;
 		this.id = id;
@@ -38,11 +40,11 @@ public class SimpleCourseInfo {
 			return new SimpleCourseInfo(status, json.getString("university"),
 					json.getString("id"), json.getString("title"), date,
 					json.getString("img_url"),
-					json.getString("course_info_url"));
+					json.getString("course_info_url"), json);
 		} else {
 			return new SimpleCourseInfo(status, json.getString("university"),
 					json.getString("id"), json.getString("title"), date,
-					json.getString("img_url"), null);
+					json.getString("img_url"), null, json);
 		}
 	}
 

@@ -3,18 +3,22 @@ package com.leonhuang.xuetangx.data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ItemInfo {
+public class ItemInfo extends BaseInfo {
 
 	private ItemType type;
 	private String surl;
 	private VideoUrlInfo vurl;
 
-	private ItemInfo(ItemType type, String url) {
+	private ItemInfo(ItemType type, String url, JSONObject json) {
+		super(json);
+
 		this.type = type;
 		this.surl = url;
 	}
 
-	private ItemInfo(ItemType type, VideoUrlInfo url) {
+	private ItemInfo(ItemType type, VideoUrlInfo url, JSONObject json) {
+		super(json);
+
 		this.type = type;
 		this.vurl = url;
 	}
@@ -30,9 +34,9 @@ public class ItemInfo {
 
 		if (ItemType.VIDEO == type) {
 			return new ItemInfo(type, VideoUrlInfo.fromJSON(json
-					.getJSONObject("item_url")));
+					.getJSONObject("item_url")), json);
 		} else {
-			return new ItemInfo(type, json.getString("item_url"));
+			return new ItemInfo(type, json.getString("item_url"), json);
 		}
 	}
 
