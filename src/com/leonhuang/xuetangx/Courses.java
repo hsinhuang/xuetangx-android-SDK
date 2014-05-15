@@ -294,7 +294,7 @@ public class Courses {
 	 * 
 	 * @throws IOException if Internet or Server error occur
 	 * 
-	 * @return null if email/password incorrect
+	 * @return null if email/password incorrect, -1 for right of Pair if no more nextOffset
 	 */
 	public static Pair<ArrayList<CourseInfo>, Integer> search(String query,
 			String cid, boolean started, boolean hasTA, int offset, int limit)
