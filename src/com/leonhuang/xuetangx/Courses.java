@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.leonhuang.xuetangx.data.CategoryInfo;
 import com.leonhuang.xuetangx.data.ChapterInfo;
@@ -286,7 +287,8 @@ public class Courses {
 	}
 
 	/*
-	 * @param "" for String, false for boolean means not required in all fields.
+	 * @param "" for String, false for boolean, -1 for int means not required in
+	 * all fields.
 	 * 
 	 * @param cid means category id.
 	 * 
@@ -294,8 +296,9 @@ public class Courses {
 	 * 
 	 * @return null if email/password incorrect
 	 */
-	public static ArrayList<CourseInfo> search(String query, String cid,
-			boolean started, boolean hasTA) throws IOException {
+	public static Pair<ArrayList<CourseInfo>, Integer> search(String query,
+			String cid, boolean started, boolean hasTA, int offset, int limit)
+			throws IOException {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		if (!query.isEmpty()) {
 			params.add(new BasicNameValuePair("query", query));
@@ -312,6 +315,12 @@ public class Courses {
 			params.add(new BasicNameValuePair("hasTA", "true"));
 		} else {
 			params.add(new BasicNameValuePair("hasTA", "false"));
+		}
+		if (-1 != offset) {
+			params.add(new BasicNameValuePair("offset", String.valueOf(offset)));
+		}
+		if (-1 != limit) {
+			params.add(new BasicNameValuePair("limit", String.valueOf(limit)));
 		}
 
 		String jsonString = "";
@@ -332,15 +341,16 @@ public class Courses {
 				return null;
 			}
 
-			ArrayList<CourseInfo> courses = new ArrayList<CourseInfo>();
+			int nextOffset = json.getInt("next_offset");
 
+			ArrayList<CourseInfo> courses = new ArrayList<CourseInfo>();
 			JSONArray coursesJSON = json.getJSONArray("courses.search");
 			for (int i = 0; i < coursesJSON.length(); i++) {
 				JSONObject categoryJSON = coursesJSON.getJSONObject(i);
 				courses.add(CourseInfo.fromJSON(categoryJSON));
 			}
 
-			return courses;
+			return new Pair<ArrayList<CourseInfo>, Integer>(courses, nextOffset);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
