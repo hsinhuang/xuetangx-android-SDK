@@ -37,6 +37,7 @@ public class Courses {
 	public static String URL_LECTURES = "http://xuetangxserver.sinaapp.com/courses/lectures/";
 	public static String URL_LECTURE = "http://xuetangxserver.sinaapp.com/courses/lecture/";
 	public static String URL_WARE = "http://xuetangxserver.sinaapp.com/courses/ware/";
+	public static String URL_VIDEO = "http://xuetangxserver.sinaapp.com/courses/video/";
 
 	/*
 	 * @throws IOException if Internet or Server error occur
@@ -570,6 +571,43 @@ public class Courses {
 			}
 
 			return chapters;
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		Log.e("XuetangX SDK", "Json string from server: " + jsonString);
+		return null;
+	}
+	
+	/*
+	 * @throws IOException if Internet or Server error occur
+	 * 
+	 * @return null if email/password incorrect
+	 */
+	public static String videoUrl(String url) throws IOException {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("url", url));
+
+		String jsonString = "";
+		try {
+			jsonString = HttpOpener.makeRequest(URL_VIDEO, params);
+		} catch (ClientProtocolException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			JSONObject json = new JSONObject(jsonString);
+			assert json.getBoolean("valid");
+			if (json.getBoolean("error")) {
+				throw new IOException("Server is inaccessible");
+			}
+
+			if (!json.getBoolean("authen")) {
+				return null;
+			}
+
+			return json.getString("video.url");
 
 		} catch (JSONException e) {
 			e.printStackTrace();
