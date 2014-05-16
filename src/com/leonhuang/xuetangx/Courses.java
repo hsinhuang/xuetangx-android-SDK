@@ -295,7 +295,8 @@ public class Courses {
 	 * 
 	 * @throws IOException if Internet or Server error occur
 	 * 
-	 * @return null if email/password incorrect, -1 for right of Pair if no more nextOffset
+	 * @return null if email/password incorrect, -1 for right of Pair if no more
+	 * nextOffset
 	 */
 	public static Pair<ArrayList<CourseInfo>, Integer> search(String query,
 			String cid, boolean started, boolean hasTA, int offset, int limit)
@@ -579,13 +580,17 @@ public class Courses {
 		Log.e("XuetangX SDK", "Json string from server: " + jsonString);
 		return null;
 	}
-	
+
 	/*
 	 * @throws IOException if Internet or Server error occur
 	 * 
-	 * @return null if email/password incorrect
+	 * @return null if email/password incorrect, otherwise the first one is raw
+	 * url, the second one is real
 	 */
-	public static String videoUrl(String url) throws IOException {
+	public static Pair<String, String> videoUrl(ItemInfo item)
+			throws IOException {
+		String url = item.getLowQualityVideoUrls()[0];
+
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("url", url));
 
@@ -607,7 +612,7 @@ public class Courses {
 				return null;
 			}
 
-			return json.getString("video.url");
+			return new Pair<String, String>(url, json.getString("video.url"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
