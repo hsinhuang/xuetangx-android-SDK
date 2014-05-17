@@ -587,12 +587,9 @@ public class Courses {
 	 * @return null if email/password incorrect, otherwise the first one is raw
 	 * url, the second one is real
 	 */
-	public static Pair<String, String> videoUrl(ItemInfo item)
-			throws IOException {
-		String url = item.getLowQualityVideoUrls()[0];
-
+	public static String videoUrl(String rawUrl) throws IOException {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("url", url));
+		params.add(new BasicNameValuePair("url", rawUrl));
 
 		String jsonString = "";
 		try {
@@ -612,7 +609,7 @@ public class Courses {
 				return null;
 			}
 
-			return new Pair<String, String>(url, json.getString("video.url"));
+			return json.getString("video.url");
 
 		} catch (JSONException e) {
 			e.printStackTrace();
