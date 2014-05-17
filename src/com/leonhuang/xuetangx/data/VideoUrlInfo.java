@@ -42,4 +42,19 @@ public class VideoUrlInfo extends BaseInfo {
 		return lowQualityUrls;
 	}
 
+	public String[] getUrls() {
+		String[] urls = new String[highQualityUrls.length
+				+ lowQualityUrls.length];
+		int i = 0;
+		for (int j = 0; j < lowQualityUrls.length; j++) {
+			urls[i] = lowQualityUrls[j];
+			i++;
+		}
+		for (int j = 0; j < highQualityUrls.length; j++) {
+			urls[i] = highQualityUrls[j];
+			i++;
+		}
+		return urls;
+	}
+
 }

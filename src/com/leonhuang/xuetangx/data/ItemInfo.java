@@ -77,4 +77,12 @@ public class ItemInfo extends BaseInfo {
 		}
 	}
 
+	public String[] getVideoUrls() {
+		if (this.type == ItemType.PROBLEM) {
+			return null;
+		} else {
+			return vurl.getUrls();
+		}
+	}
+
 }
