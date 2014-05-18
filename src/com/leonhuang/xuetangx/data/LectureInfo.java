@@ -11,24 +11,29 @@ public class LectureInfo extends BaseInfo {
 	private String title;
 	private String url;
 	private ArrayList<ItemInfo> items;
+	private ChapterInfo chapter;
 
 	private LectureInfo(String title, String url, ArrayList<ItemInfo> items,
-			JSONObject json) {
+			ChapterInfo chapter, JSONObject json) {
 		super(json);
 
 		this.title = title;
 		this.url = url;
 		this.items = items;
+		this.chapter = chapter;
 	}
 
-	public static LectureInfo fromJSON(JSONObject json) throws JSONException {
+	public static LectureInfo fromJSON(JSONObject json, ChapterInfo chapter)
+			throws JSONException {
 		ArrayList<ItemInfo> items = new ArrayList<ItemInfo>();
+		LectureInfo self = new LectureInfo(json.getString("lecture_title"),
+				json.getString("lecture_url"), items, chapter, json);
+
 		JSONArray itemsJSON = json.getJSONArray("lecture_items");
 		for (int i = 0; i < itemsJSON.length(); i++) {
-			items.add(ItemInfo.fromJSON(itemsJSON.getJSONObject(i)));
+			items.add(ItemInfo.fromJSON(itemsJSON.getJSONObject(i), self));
 		}
-		return new LectureInfo(json.getString("lecture_title"),
-				json.getString("lecture_url"), items, json);
+		return self;
 	}
 
 	public String getTitle() {
@@ -41,6 +46,10 @@ public class LectureInfo extends BaseInfo {
 
 	public ArrayList<ItemInfo> getItems() {
 		return items;
+	}
+
+	public ChapterInfo getChapter() {
+		return chapter;
 	}
 
 }

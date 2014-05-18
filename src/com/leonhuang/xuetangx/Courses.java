@@ -475,7 +475,8 @@ public class Courses {
 			ArrayList<ChapterInfo> chapters = new ArrayList<ChapterInfo>();
 			JSONArray chaptersJSON = json.getJSONArray("courses.ware");
 			for (int i = 0; i < chaptersJSON.length(); i++) {
-				chapters.add(ChapterInfo.fromJSON(chaptersJSON.getJSONObject(i)));
+				chapters.add(ChapterInfo.fromJSON(
+						chaptersJSON.getJSONObject(i), course));
 			}
 
 			return chapters;
@@ -521,7 +522,7 @@ public class Courses {
 			ArrayList<ItemInfo> items = new ArrayList<ItemInfo>();
 			JSONArray itemsJSON = json.getJSONArray("courses.lecture");
 			for (int i = 0; i < itemsJSON.length(); i++) {
-				items.add(ItemInfo.fromJSON(itemsJSON.getJSONObject(i)));
+				items.add(ItemInfo.fromJSON(itemsJSON.getJSONObject(i), lecture));
 			}
 
 			return items;
@@ -568,7 +569,7 @@ public class Courses {
 			JSONArray chaptersJSON = json.getJSONArray("courses.lectures");
 			for (int i = 0; i < chaptersJSON.length(); i++) {
 				chapters.add(SimpleChapterInfo.fromJSON(chaptersJSON
-						.getJSONObject(i)));
+						.getJSONObject(i), lecture));
 			}
 
 			return chapters;
